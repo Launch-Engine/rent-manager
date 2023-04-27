@@ -1,8 +1,6 @@
 # Rent Manager
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rent_manager`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem is a wrapper for the Rent Manager API. It is a work in progress and not feature complete.
 
 ## Installation
 
@@ -347,6 +345,10 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 - WebPageCustomizations
 - WebUserAccounts
 - WebUsers
+
+## Limitations
+
+In order to use the Rent Manager API you must first have a Rent Manager account. At this time, Rent Manager does offer a sandbox environment for testing, but it comes with the paid access to the API. This gem can be used with both the sandbox and production environments.
 
 ## Contributing
 

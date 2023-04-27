@@ -99,7 +99,7 @@ class RentManagerRelation < RentManager::RecordBase
     @page_size = page_params[:page_size] if page_params.key?(:page_size)
     @order_by = page_params[:order_by] if page_params.key?(:order_by)
 
-    self.class.fetch(path, params.merge(auth: @auth))
+    self.class.fetch(path, params.merge(@auth))
   end
 
   def nocontent!

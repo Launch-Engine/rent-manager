@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'rubygems'
-require 'json'
-require 'typhoeus'
-require 'awrence'
-require 'plissken'
+# require 'json'
+# require 'typhoeus'
+# require 'awrence'
+# require 'plissken'
 
 require_relative 'rent_manager/version'
 

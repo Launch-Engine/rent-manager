@@ -15,7 +15,7 @@ module RentManager
       end
 
       def fetch(path, params)
-        response = process_request(:get, path, params.to_camelback_keys)
+        response = process_request(:get, path, params)
         return RentManager::RentManagerResultSet.new(response) if SUCCESS_CODES.include?(response.response_code)
 
         RentManager::RentManagerError.new(response)
@@ -70,7 +70,7 @@ module RentManager
         Typhoeus::Request.new(
           "https://#{auth[:rent_manager_company_code]}.api.rentmanager.com/#{url_path}",
           method: request_type,
-          params: params,
+          params: params.to_camelback_keys,
           headers: {
             'X-RM12Api-ApiToken': auth[:rent_manager_auth_token],
             'Content-Type' => 'application/json'

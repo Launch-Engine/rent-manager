@@ -7,8 +7,8 @@ module RentManager
       # def create(params)
       # end
 
-      def fetch_id(path, id)
-        response = process_request(:get, [path, id].join('/'))
+      def fetch_id(path, id, params = {})
+        response = process_request(:get, [path, id].join('/'), params)
         return RentManager::RentManagerResult.new(response) if SUCCESS_CODES.include?(response.response_code)
 
         RentManager::RentManagerError.new(response)

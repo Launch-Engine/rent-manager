@@ -7,9 +7,14 @@ class RentManagerRelation < RentManager::RecordBase
               :nocontent,
               :order_by,
               :page_number,
-              :page_size
+              :page_size,
+              :auth
 
   class << self
+    def authenticate(args)
+      new.authenticate(args)
+    end
+
     def embeds(args)
       new.embeds(args)
     end
@@ -40,6 +45,7 @@ class RentManagerRelation < RentManager::RecordBase
   end
 
   def initialize
+    @auth = {}
     @id = nil
     @embeds = []
     @fields = []
@@ -49,6 +55,11 @@ class RentManagerRelation < RentManager::RecordBase
     @order_by = nil
     @page = nil
     @page_size = nil
+  end
+
+  def authenticate(args)
+    @auth = args
+    self
   end
 
   def embeds(args)
@@ -67,7 +78,7 @@ class RentManagerRelation < RentManager::RecordBase
   end
 
   def find(id)
-    self.class.fetch_id(path, id)
+    self.class.fetch_id(path, id, @auth)
   end
 
   def id(id)
@@ -83,11 +94,12 @@ class RentManagerRelation < RentManager::RecordBase
   end
 
   def list(page_params = {})
+    # Need to authenticate when page params are passed with authenticated request
     @page_number = page_params[:page_number] if page_params.key?(:page_number)
     @page_size = page_params[:page_size] if page_params.key?(:page_size)
     @order_by = page_params[:order_by] if page_params.key?(:order_by)
 
-    self.class.fetch(path, params)
+    self.class.fetch(path, params.merge(auth: @auth))
   end
 
   def nocontent!

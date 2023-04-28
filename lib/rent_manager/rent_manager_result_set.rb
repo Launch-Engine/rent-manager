@@ -1,6 +1,10 @@
 module RentManager
   class RentManagerResultSet < RentManagerResultBase
+    include Enumerable
+
     attr_reader :count
+    alias size count
+
     attr_reader :total_count
     attr_reader :per_page
     attr_reader :page_number
@@ -14,6 +18,18 @@ module RentManager
       options = JSON.parse(http_response.request.options[:params].to_snake_keys.to_json)
       @per_page = options['pagesize'].to_i
       @page_number = options['pagenumber'].to_i
+    end
+
+    def [](index)
+      @attributes[index]
+    end
+
+    def each(&_block)
+      @attributes.each { |result| yield(result) }
+    end
+
+    def empty?
+      @count == 0
     end
   end
 end

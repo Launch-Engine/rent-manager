@@ -62,17 +62,17 @@ class RentManagerRelation < RentManager::RecordBase
     self
   end
 
-  def embeds(args)
+  def embeds(*args)
     @embeds += arrayitize(args)
     self
   end
 
-  def fields(args)
+  def fields(*args)
     @fields += arrayitize(args)
     self
   end
 
-  def filter(args)
+  def filter(*args)
     @filters += arrayitize(args)
     self
   end

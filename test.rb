@@ -18,7 +18,7 @@ auth = {
   rent_manager_password: ENV['RENT_MANAGER_PASSWORD']
 }
 
-properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships).list(page_size: 5, page_number: 1)
+# properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships).list(page_size: 5, page_number: 1)
 
 # leases = RentManager::Lease.list
 # lease = RentManager::Lease.find(3)
@@ -41,6 +41,8 @@ properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships
 
 # RentManager::Property.authenticate(auth).list
 # RentManager::Property.authenticate(auth).id(2).join(:current_owners).list
+
+gl_accounts = RentManager::GeneralLedgerAccount.authenticate(auth).embeds(:parent_gl_account).filter('IsActive,eq,true').list(page_size: 5, page_number: 1)
 
 binding.pry
 

@@ -20,8 +20,7 @@ auth = {
 
 # properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships).list(page_size: 5, page_number: 1)
 
-# leases = RentManager::Lease.list
-# lease = RentManager::Lease.find(3)
+# leases = RentManager::Lease.authenticate(auth).embeds('tenant.balance', 'tenant.security_deposit_held').list
 # lease = RentManager::Lease.authenticate(auth).find(3)
 
 # owners = RentManager::Owner.list(page_size: 2, page_number: 3)
@@ -31,7 +30,7 @@ auth = {
 # properties = RentManager::Property.list
 # property = RentManager::Property.find(1)
 
-# tenants = RentManager::Tenant.list
+# tenants = RentManager::Tenant.authenticate(auth).embeds(:recurring_charges).list(page_size: 5, page_number: 1)
 # tenant = RentManager::Tenant.find(9)
 
 # properties1 = RentManager::Property.id(17).join(:current_owners).list
@@ -42,7 +41,25 @@ auth = {
 # RentManager::Property.authenticate(auth).list
 # RentManager::Property.authenticate(auth).id(2).join(:current_owners).list
 
-gl_accounts = RentManager::GeneralLedgerAccount.authenticate(auth).embeds(:parent_gl_account).filter('IsActive,eq,true').list(page_size: 5, page_number: 1)
+# gl_accounts = RentManager::GeneralLedgerAccount.authenticate(auth).embeds(:parent_gl_account).filter('IsActive,eq,true').list(page_size: 5, page_number: 1)
+# gl_account_data = RentManager::GeneralLedgerAccountData.authenticate(auth).list(page_size: 5, page_number: 1)
+
+# charge_types = RentManager::ChargeType.authenticate(auth)
+#                                       .filter('IsActive,eq,true')
+#                                       .filter('name,eq,RC')
+#                                       .list(page_size: 500, page_number: 1)
+
+# /Charges?filters=TransactionDate,ge,01%2F01%2F2020
+
+
+charges = RentManager::Charge.authenticate(auth)
+                             .filter('TransactionDate,ge,01/01/2022')
+                             .list(page_size: 500, page_number: 1)
+payments = RentManager::Payment.authenticate(auth)
+                               .embeds(:allocations)
+                               .filter('TransactionDate,ge,01/01/2022')
+                               .list(page_size: 500, page_number: 1)
+
 
 binding.pry
 

@@ -22,8 +22,12 @@ require_relative 'rent_manager/record_base'
 require_relative 'rent_manager/rent_manager_relation'
 
 # Models
+require_relative 'rent_manager/charge'
+require_relative 'rent_manager/charge_type'
 require_relative 'rent_manager/general_ledger_account'
+require_relative 'rent_manager/general_ledger_account_data'
 require_relative 'rent_manager/lease'
 require_relative 'rent_manager/tenant'
 require_relative 'rent_manager/owner'
+require_relative 'rent_manager/payment'
 require_relative 'rent_manager/property'

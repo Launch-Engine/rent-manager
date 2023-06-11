@@ -87,8 +87,6 @@ class RentManagerRelation < RentManager::RecordBase
   end
 
   def join(model)
-    raise 'Unknown join model' unless self.class.join_tables.include?(model)
-
     @join = camelize_string(model)
     self
   end
@@ -129,7 +127,7 @@ class RentManagerRelation < RentManager::RecordBase
     retval = {}
     retval[:embeds] = @embeds.map { |str| camelize_string(str) }.join(',') if @embeds.any?
     retval[:fields] = @fields.map { |str| camelize_string(str) }.join(',') if @fields.any?
-    retval[:filters] = @filters.join(',') if @filters.any?
+    retval[:filters] = @filters.join(';') if @filters.any?
     retval[:pagenumber] = @page_number if @page_number
     retval[:pagesize] = @page_size if @page_size
     retval[:orderby] = @order_by if @order_by

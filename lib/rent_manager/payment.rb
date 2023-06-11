@@ -1,7 +1,7 @@
 module RentManager
-  class Lease < RentManagerRelation
+  class Payment < RentManagerRelation
     def self.base_path
-      'Leases'
+      'Payments'
     end
   end
 end

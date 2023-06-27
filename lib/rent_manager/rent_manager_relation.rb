@@ -1,4 +1,6 @@
 class RentManagerRelation < RentManager::RecordBase
+  include RentManager::RentManagerHelpers
+
   attr_reader :id,
               :embeds,
               :fields,
@@ -15,15 +17,15 @@ class RentManagerRelation < RentManager::RecordBase
       new.authenticate(args)
     end
 
-    def embeds(args)
+    def embeds(*args)
       new.embeds(args)
     end
 
-    def fields(args)
+    def fields(*args)
       new.fields(args)
     end
 
-    def filter(args)
+    def filter(*args)
       new.filter(args)
     end
 
@@ -133,15 +135,5 @@ class RentManagerRelation < RentManager::RecordBase
     retval[:orderby] = @order_by if @order_by
     retval[:nocontent] = 'true' if @nocontent
     retval
-  end
-
-  private
-
-  def arrayitize(array_or_string)
-    array_or_string.is_a?(Array) ? array_or_string : [array_or_string]
-  end
-
-  def camelize_string(str)
-    str.to_s.split('_').collect(&:capitalize).join
   end
 end

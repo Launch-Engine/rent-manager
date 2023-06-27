@@ -52,13 +52,18 @@ auth = {
 # /Charges?filters=TransactionDate,ge,01%2F01%2F2020
 
 
-charges = RentManager::Charge.authenticate(auth)
-                             .filter('TransactionDate,ge,01/01/2022')
-                             .list(page_size: 500, page_number: 1)
-payments = RentManager::Payment.authenticate(auth)
-                               .embeds(:allocations)
-                               .filter('TransactionDate,ge,01/01/2022')
-                               .list(page_size: 500, page_number: 1)
+# charges = RentManager::Charge.authenticate(auth)
+#                              .filter('TransactionDate,ge,01/01/2022')
+#                              .list(page_size: 500, page_number: 1)
+# payments = RentManager::Payment.authenticate(auth)
+#                                .embeds(:allocations)
+#                                .filter('TransactionDate,ge,01/01/2022')
+#                                .list(page_size: 500, page_number: 1)
+
+gl_report = RentManager::GeneralLedgerReport.authenticate(auth)
+                                            .parameters('StartDate,01/02/2020')
+                                            .parameters('EndDate,01/05/2020')
+                                            .process
 
 
 binding.pry

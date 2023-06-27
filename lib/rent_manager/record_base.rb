@@ -1,6 +1,6 @@
 module RentManager
   class RecordBase
-    SUCCESS_CODES = [200, 201].freeze
+    SUCCESS_CODES = [200, 201, 204].freeze
 
     class << self
       # -------- Action Methods --------

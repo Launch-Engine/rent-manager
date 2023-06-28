@@ -38,7 +38,7 @@ module RentManager
     end
 
     def process
-      self.class.fetch(path, params.merge(@auth))
+      self.class.fetch_report(path, params.merge(@auth))
     end
   end
 end

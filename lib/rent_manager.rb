@@ -17,6 +17,7 @@ require_relative 'rent_manager/rent_manager_error'
 require_relative 'rent_manager/rent_manager_result_base'
 require_relative 'rent_manager/rent_manager_result'
 require_relative 'rent_manager/rent_manager_result_set'
+require_relative 'rent_manager/rent_manager_result_report'
 
 require_relative 'rent_manager/rent_manager_helpers'
 

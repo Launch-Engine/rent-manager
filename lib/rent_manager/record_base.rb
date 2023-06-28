@@ -21,6 +21,13 @@ module RentManager
         RentManager::RentManagerError.new(response)
       end
 
+      def fetch_report(path, params)
+        response = process_request(:get, path, params)
+        return RentManager::RentManagerResultReport.new(response) if SUCCESS_CODES.include?(response.response_code)
+
+        RentManager::RentManagerError.new(response)
+      end
+
       # def update(id, params)
       # end
 

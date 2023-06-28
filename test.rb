@@ -60,11 +60,16 @@ auth = {
 #                                .filter('TransactionDate,ge,01/01/2022')
 #                                .list(page_size: 500, page_number: 1)
 
-gl_report = RentManager::GeneralLedgerReport.authenticate(auth)
+# gl_report = RentManager::GeneralLedgerReport.authenticate(auth)
+#                                             .parameters('StartDate,01/02/2020')
+#                                             .parameters('EndDate,01/05/2020')
+#                                             .process
+
+
+jt_report = RentManager::JournalTransactionReport.authenticate(auth)
                                             .parameters('StartDate,01/02/2020')
                                             .parameters('EndDate,01/05/2020')
                                             .process
-
 
 binding.pry
 

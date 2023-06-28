@@ -26,6 +26,7 @@ require_relative 'rent_manager/rent_manager_report'
 
 # Reports
 require_relative 'rent_manager/general_ledger_report'
+require_relative 'rent_manager/journal_transaction_report'
 
 # Models
 require_relative 'rent_manager/charge'

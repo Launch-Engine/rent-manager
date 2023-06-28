@@ -38,7 +38,6 @@ module RentManager
     end
 
     def process
-      binding.pry
       self.class.fetch(path, params.merge(@auth))
     end
   end

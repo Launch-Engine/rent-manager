@@ -66,11 +66,15 @@ auth = {
 #                                             .process
 
 
-jt_report = RentManager::JournalTransactionReport.authenticate(auth)
-                                            .parameters('StartDate,01/02/2020')
-                                            .parameters('EndDate,02/01/2020')
-                                            .process
+# jt_report = RentManager::JournalTransactionReport.authenticate(auth)
+#                                             .parameters('StartDate,01/02/2020')
+#                                             .parameters('EndDate,02/01/2020')
+#                                             .process
+
+tenants = RentManager::Tenant.authenticate(auth)
+                             .embeds(:balance, :leases, :recurring_charges, :security_deposit_held)
+                             .filter('Status,eq,Current')
+                             .list(page_size: 100, page_number: 3)
 
 binding.pry
-
 asdf=3

@@ -71,10 +71,13 @@ auth = {
 #                                             .parameters('EndDate,02/01/2020')
 #                                             .process
 
-tenants = RentManager::Tenant.authenticate(auth)
-                             .embeds(:balance, :leases, :recurring_charges, :security_deposit_held)
-                             .filter('Status,eq,Current')
-                             .list(page_size: 100, page_number: 3)
+# tenants = RentManager::Tenant.authenticate(auth)
+#                              .embeds(:balance, :leases, :recurring_charges, :security_deposit_held)
+#                              .filter('Status,eq,Current')
+#                              .list(page_size: 100, page_number: 3)
+
+
+bos_report = RentManager::BasicOwnerStatementReport.authenticate(auth).process
 
 binding.pry
 asdf=3

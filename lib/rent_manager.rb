@@ -26,6 +26,7 @@ require_relative 'rent_manager/rent_manager_relation'
 require_relative 'rent_manager/rent_manager_report'
 
 # Reports
+require_relative 'rent_manager/basic_owner_statement_report'
 require_relative 'rent_manager/general_ledger_report'
 require_relative 'rent_manager/journal_transaction_report'
 

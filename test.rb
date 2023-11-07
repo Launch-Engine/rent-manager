@@ -12,13 +12,28 @@ require './lib/rent_manager'
 #   config.auth_token = 'SOME_TOKEN'
 # end
 
+# auth = {
+#   rent_manager_company_code: ENV['RENT_MANAGER_COMPANY_CODE'],
+#   rent_manager_username: ENV['RENT_MANAGER_USERNAME'],
+#   rent_manager_password: ENV['RENT_MANAGER_PASSWORD']
+# }
+
+# RentManager.configure do |config|
+#   config.company_code = ENV['RENT_MANAGER_COMPANY_CODE']
+#   config.partner_token = ENV['RENT_MANAGER_PARTNER_TOKEN']
+# end
+
+# RentManager.configure do |config|
+#   config.company_code = ENV['RENT_MANAGER_COMPANY_CODE']
+#   config.partner_token = 'SOME_TOKEN'
+# end
+
 auth = {
   rent_manager_company_code: ENV['RENT_MANAGER_COMPANY_CODE'],
-  rent_manager_username: ENV['RENT_MANAGER_USERNAME'],
-  rent_manager_password: ENV['RENT_MANAGER_PASSWORD']
+  rent_manager_partner_token: ENV['RENT_MANAGER_PARTNER_TOKEN']
 }
 
-# properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships).list(page_size: 5, page_number: 1)
+properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships).list(page_size: 5, page_number: 1)
 
 # leases = RentManager::Lease.authenticate(auth).embeds('tenant.balance', 'tenant.security_deposit_held').list
 # lease = RentManager::Lease.authenticate(auth).find(3)
@@ -34,7 +49,7 @@ auth = {
 # tenant = RentManager::Tenant.find(9)
 
 # properties1 = RentManager::Property.id(17).join(:current_owners).list
-# properties2 = RentManager::Property.embeds(:ownerships).list
+# properties2 = RentManager::Property.authenticate(auth).embeds(:ownerships).list
 # properties3 = RentManager::Property.filter('Name,ct,House').list
 # properties4 = RentManager::Property.id(17).join(:units).list
 
@@ -60,24 +75,15 @@ auth = {
 #                                .filter('TransactionDate,ge,01/01/2022')
 #                                .list(page_size: 500, page_number: 1)
 
-# gl_report = RentManager::GeneralLedgerReport.authenticate(auth)
-#                                             .parameters('StartDate,01/02/2020')
-#                                             .parameters('EndDate,01/05/2020')
-#                                             .process
+# gl_report = RentManager::GeneralLedgerReport.authenticate(auth).parameters('StartDate,01/02/2020').parameters('EndDate,01/05/2020').process
 
 
-# jt_report = RentManager::JournalTransactionReport.authenticate(auth)
-#                                             .parameters('StartDate,01/02/2020')
-#                                             .parameters('EndDate,02/01/2020')
-#                                             .process
+# jt_report = RentManager::JournalTransactionReport.authenticate(auth).parameters('StartDate,01/02/2020').parameters('EndDate,02/01/2020').process
 
-# tenants = RentManager::Tenant.authenticate(auth)
-#                              .embeds(:balance, :leases, :recurring_charges, :security_deposit_held)
-#                              .filter('Status,eq,Current')
-#                              .list(page_size: 100, page_number: 3)
+# tenants = RentManager::Tenant.authenticate(auth).embeds(:balance, :leases, :recurring_charges, :security_deposit_held).filter('Status,eq,Current').list(page_size: 100, page_number: 3)
 
 
-bos_report = RentManager::BasicOwnerStatementReport.authenticate(auth).process
+# bos_report = RentManager::BasicOwnerStatementReport.authenticate(auth).process
 
 binding.pry
 asdf=3

@@ -36,17 +36,18 @@ module RentManager
       def extract_auth(params)
         company_code = params&.delete(:rent_manager_company_code) || RentManager.configuration&.company_code
         auth_token = params&.delete(:rent_manager_auth_token) || RentManager.configuration&.auth_token
+        partner_token = params&.delete(:rent_manager_partner_token) || RentManager.configuration&.partner_token
 
-        if auth_token.nil?
+        if auth_token.nil? && partner_token.nil?
           username = params&.delete(:rent_manager_username) || RentManager.configuration&.username
           password = params&.delete(:rent_manager_password) || RentManager.configuration&.password
           auth_token = login(company_code, username, password)
         end
 
-        {
-          rent_manager_company_code: company_code,
-          rent_manager_auth_token: auth_token
-        }
+        retval = { rent_manager_company_code: company_code }
+        retval[:rent_manager_partner_token] = partner_token unless partner_token.nil?
+        retval[:rent_manager_auth_token] = auth_token unless auth_token.nil?
+        retval
       end
 
       def login(company_code, username, password)
@@ -78,11 +79,16 @@ module RentManager
           "https://#{auth[:rent_manager_company_code]}.api.rentmanager.com/#{url_path}",
           method: request_type,
           params: params.to_camelback_keys,
-          headers: {
-            'X-RM12Api-ApiToken': auth[:rent_manager_auth_token],
-            'Content-Type' => 'application/json'
-          }
+          headers: rent_manager_auth_headers(auth)
         ).run
+      end
+
+      def rent_manager_auth_headers(auth)
+        retval = { 'Content-Type' => 'application/json' }
+        retval['X-RM12Api-ApiToken'] = auth[:rent_manager_auth_token] unless auth[:rent_manager_auth_token].nil?
+        retval['X-RM12Api-PartnerToken'] = auth[:rent_manager_partner_token] unless auth[:rent_manager_partner_token].nil?
+        retval['X-RM12Api-LocationID'] = 1
+        retval
       end
     end
   end

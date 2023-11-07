@@ -4,5 +4,6 @@ module RentManager
     attr_accessor :username
     attr_accessor :password
     attr_accessor :auth_token
+    attr_accessor :partner_token
   end
 end

@@ -18,7 +18,7 @@ module RentManager
     end
 
     def authenticate(args)
-      @auth = args
+      @auth = args.clone
       self
     end
 

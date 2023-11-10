@@ -31,9 +31,10 @@ require './lib/rent_manager'
 auth = {
   rent_manager_company_code: ENV['RENT_MANAGER_COMPANY_CODE'],
   rent_manager_partner_token: ENV['RENT_MANAGER_PARTNER_TOKEN']
+  # proxy: 'PROXY_URL'
 }
 
-properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships).list(page_size: 5, page_number: 1)
+# properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships).list(page_size: 5, page_number: 1)
 
 # leases = RentManager::Lease.authenticate(auth).embeds('tenant.balance', 'tenant.security_deposit_held').list
 # lease = RentManager::Lease.authenticate(auth).find(3)
@@ -77,6 +78,12 @@ properties = RentManager::Property.authenticate(auth).embeds(:units, :ownerships
 
 # gl_report = RentManager::GeneralLedgerReport.authenticate(auth).parameters('StartDate,01/02/2020').parameters('EndDate,01/05/2020').process
 
+
+
+charge_types = RentManager::ChargeType.authenticate(auth)
+                                      .filter('IsActive,eq,true')
+                                      .filter('name,eq,RC') # RC = Rent Charge
+                                      .list(page_size: 100, page_number: 1)
 
 # jt_report = RentManager::JournalTransactionReport.authenticate(auth).parameters('StartDate,01/02/2020').parameters('EndDate,02/01/2020').process
 

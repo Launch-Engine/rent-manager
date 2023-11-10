@@ -50,6 +50,10 @@ module RentManager
         retval
       end
 
+      def extract_proxy(params)
+        params&.delete(:proxy) || RentManager.configuration&.proxy
+      end
+
       def login(company_code, username, password)
         raise 'Company code for Rent Manager is not set.' if company_code.nil?
         raise 'Username for Rent Manager is not set.' if username.nil?
@@ -74,12 +78,18 @@ module RentManager
 
       def process_request(request_type, url_path, params = {})
         auth = extract_auth(params)
+        proxy = extract_proxy(params)
 
-        Typhoeus::Request.new(
-          "https://#{auth[:rent_manager_company_code]}.api.rentmanager.com/#{url_path}",
+        request_params = {
           method: request_type,
           params: params.to_camelback_keys,
           headers: rent_manager_auth_headers(auth)
+        }
+        request_params[:proxy] = proxy unless proxy.nil?
+
+        Typhoeus::Request.new(
+          "https://#{auth[:rent_manager_company_code]}.api.rentmanager.com/#{url_path}",
+          request_params
         ).run
       end
 
